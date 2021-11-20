@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 
-const SidebarAdmin = () => {
+const BookAddForm = () => {
   return <Box></Box>;
 };
 
-export default SidebarAdmin;
+export default BookAddForm;
