@@ -7,8 +7,8 @@ import { Button } from "@chakra-ui/button";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Heading, Text } from "@chakra-ui/layout";
 import { useNavigate } from "react-router";
-import LayoutAdmin from "../../components/layouts/admin/layout-admin";
-import BookTable from "../../components/pages/admin/book/book-table";
+import LayoutAdmin from "../../../components/layouts/admin/layout-admin";
+import BookTable from "../../../components/pages/admin/book/book-table";
 
 const Book = () => {
   const navigate = useNavigate();

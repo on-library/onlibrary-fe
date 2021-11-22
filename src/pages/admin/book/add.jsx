@@ -6,11 +6,14 @@ import {
 import { Button } from "@chakra-ui/button";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Heading, Text } from "@chakra-ui/layout";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import LayoutAdmin from "../../../components/layouts/admin/layout-admin";
 import BookAddForm from "../../../components/pages/admin/book/book-add-form";
 
 const AddBook = () => {
+  const bookAddForm = useForm();
+
   return (
     <LayoutAdmin>
       <Box>
@@ -33,7 +36,7 @@ const AddBook = () => {
         <Text>Tambah buku pada koleksi buku perpustakaan</Text>
       </Box>
       <Box>
-        <BookAddForm />
+        <BookAddForm bookAddForm={bookAddForm} />
       </Box>
     </LayoutAdmin>
   );
