@@ -34,7 +34,15 @@ const Table = ({ columns, data }) => {
           return (
             <Tr {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>;
+                return (
+                  <Td
+                    borderWidth="1px"
+                    borderColor="gray.700"
+                    {...cell.getCellProps()}
+                  >
+                    {cell.render("Cell")}
+                  </Td>
+                );
               })}
             </Tr>
           );
