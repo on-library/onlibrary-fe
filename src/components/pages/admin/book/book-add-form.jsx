@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
-import { Box, GridItem, SimpleGrid, Text } from "@chakra-ui/layout";
+import { Box, Divider, GridItem, SimpleGrid, Text } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
@@ -22,10 +22,10 @@ const BookAddForm = ({ bookAddForm }) => {
   };
 
   return (
-    <Box w={{ lg: "60%" }}>
+    <Box>
       <form onSubmit={bookAddForm.handleSubmit(onSubmit)}>
-        <SimpleGrid mt={10} columns={[1, 1, 1]} gap={6}>
-          <GridItem>
+        <SimpleGrid mt={10} columns={2} gap={6}>
+          <GridItem colSpan={[2, 2, 2, 1]}>
             <Box>
               <Text fontWeight="semibold">Nama Buku *</Text>
               <Input
@@ -47,19 +47,8 @@ const BookAddForm = ({ bookAddForm }) => {
               </Text>
             </Box>
           </GridItem>
-          <GridItem>
-            <Box>
-              <Text fontWeight="semibold">Deskripsi Buku</Text>
-              <Textarea
-                mt={1}
-                {...bookAddForm.register("deskripsi_buku", {
-                  required: "Required input",
-                })}
-                isInvalid={!!bookAddForm.formState.errors.deskripsi_buku}
-              />
-            </Box>
-          </GridItem>
-          <GridItem>
+
+          <GridItem colSpan={[2, 2, 2, 1]}>
             <Box>
               <Text fontWeight="semibold">Penulis Buku</Text>
               <Input
@@ -71,7 +60,8 @@ const BookAddForm = ({ bookAddForm }) => {
               />
             </Box>
           </GridItem>
-          <GridItem>
+
+          <GridItem colSpan={[2, 2, 2, 1]}>
             <Box>
               <Text fontWeight="semibold">Penerbit Buku</Text>
               <Input
@@ -83,7 +73,8 @@ const BookAddForm = ({ bookAddForm }) => {
               />
             </Box>
           </GridItem>
-          <GridItem>
+
+          <GridItem colSpan={[2, 2, 1, 1]}>
             <Box>
               <Text fontWeight="semibold">Tahun Terbit</Text>
               <Input
@@ -93,7 +84,8 @@ const BookAddForm = ({ bookAddForm }) => {
               />
             </Box>
           </GridItem>
-          <GridItem>
+
+          <GridItem colSpan={[2, 2, 1, 1]}>
             <Box>
               <Text fontWeight="semibold">Genre</Text>
               <Select
@@ -109,14 +101,15 @@ const BookAddForm = ({ bookAddForm }) => {
               />
             </Box>
           </GridItem>
-          <GridItem>
+
+          <GridItem colSpan={[2, 2, 1, 1]}>
             <Box>
               <Text fontWeight="semibold">Kategori</Text>
               <Select isMulti={true} options={genreOptions} />
             </Box>
           </GridItem>
-          <GridItem>
-            <Box>
+          <GridItem colSpan={2}>
+            <Box width="30%">
               <Text fontWeight="semibold">Stok *</Text>
               <Input
                 type="number"
@@ -138,14 +131,37 @@ const BookAddForm = ({ bookAddForm }) => {
               </Text>
             </Box>
           </GridItem>
+
+          <GridItem colSpan={2}>
+            <Divider />
+          </GridItem>
+
+          <GridItem colSpan={2}>
+            <Box>
+              <Text fontWeight="semibold">Upload gambar</Text>
+              <Input type="file" py="auto" borderWidth="0px" mt="2" />
+            </Box>
+          </GridItem>
+
+          <GridItem colSpan={2}>
+            <Box>
+              <Text fontWeight="semibold">Deskripsi Buku</Text>
+              <Textarea
+                mt={1}
+                {...bookAddForm.register("deskripsi_buku", {
+                  required: "Required input",
+                })}
+                isInvalid={!!bookAddForm.formState.errors.deskripsi_buku}
+              />
+            </Box>
+          </GridItem>
         </SimpleGrid>
-        <GridItem>
-          <Box my={10}>
-            <Button type="submit" colorScheme="purple">
-              Tambahkan Buku
-            </Button>
-          </Box>
-        </GridItem>
+
+        <Box my={10} justifyContent="center" display="flex">
+          <Button type="submit" colorScheme="green" h="44px" width="260px">
+            Tambahkan Buku
+          </Button>
+        </Box>
       </form>
     </Box>
   );

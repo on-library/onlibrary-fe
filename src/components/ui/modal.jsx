@@ -9,21 +9,24 @@ import {
   ModalFooter,
 } from "@chakra-ui/modal";
 
-const Modal = ({ onOpen, isOpen, onClose }) => {
+const Modal = ({
+  onOpen,
+  isOpen,
+  onClose,
+  children,
+  title,
+  modalBody,
+  modalFooter,
+}) => {
   return (
-    <ModalChakra isOpen={isOpen} onClose={onClose}>
+    <ModalChakra size="3xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
+        <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>{/* <Lorem count={2} /> */}</ModalBody>
+        <ModalBody>{modalBody}</ModalBody>
 
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
-          </Button>
-          <Button variant="ghost">Secondary Action</Button>
-        </ModalFooter>
+        <ModalFooter>{modalFooter}</ModalFooter>
       </ModalContent>
     </ModalChakra>
   );

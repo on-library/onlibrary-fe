@@ -20,6 +20,7 @@ const SidebarAdmin = () => {
         display="flex"
         justifyContent="center"
         borderBottom="1px"
+        borderColor="gray.300"
         py={2}
         h="64px"
         alignItems="center"
@@ -37,10 +38,11 @@ const SidebarAdmin = () => {
               key={item.name}
               h="44px"
               display="flex"
-              justifyContent="center"
+              justifyContent="left"
+              pl={4}
               alignItems="center"
-              borderBottom="1px"
-              fontSize="lg"
+              // borderBottom="1px"
+              fontSize="md"
               py={4}
               bg={isPathNow ? "gray.200" : "white"}
               cursor="pointer"

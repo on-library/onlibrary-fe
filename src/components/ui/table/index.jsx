@@ -18,11 +18,13 @@ const Table = ({ columns, data }) => {
 
   return (
     <TableChakra {...getTableProps()}>
-      <Thead>
+      <Thead borderBottomWidth="0px" bg="green.600">
         {headerGroups.map((headerGroup) => (
           <Tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <Th {...column.getHeaderProps()}>{column.render("Header")}</Th>
+              <Th textColor="white" {...column.getHeaderProps()}>
+                {column.render("Header")}
+              </Th>
             ))}
           </Tr>
         ))}
@@ -36,8 +38,11 @@ const Table = ({ columns, data }) => {
               {row.cells.map((cell) => {
                 return (
                   <Td
-                    borderWidth="1px"
-                    borderColor="gray.700"
+                    borderBottomWidth="1px"
+                    borderLeftWidth="1px"
+                    borderRightWidth="1px"
+                    borderColor="gray.300"
+                    padding="2"
                     {...cell.getCellProps()}
                   >
                     {cell.render("Cell")}
