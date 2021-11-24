@@ -10,6 +10,7 @@ import Home from "../pages/landing/home";
 import Profile from "../pages/my/profile/profile";
 import StatusBook from "../pages/my/book/status-book";
 import Register from "../pages/register/register";
+import NotFound from "../pages/not-found";
 
 export const routes = [
   {
@@ -63,5 +64,9 @@ export const routes = [
   {
     path: "/my/book/status",
     component: <StatusBook />, //status information page
+  },
+  {
+    path: "*",
+    component: <NotFound />,
   },
 ];
