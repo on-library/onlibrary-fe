@@ -18,7 +18,8 @@ const Dashboard = () => {
         </Breadcrumb>
       </Box>
       <Heading mt={2}>Dashboard</Heading>
-      <SimpleGrid columns={3}>
+      <SimpleGrid mt={4} columns={[1, 1, 2]} gap={6}>
+        <InfoCard />
         <InfoCard />
         <InfoCard />
         <InfoCard />
