@@ -6,11 +6,19 @@ import AdminBook from "../pages/admin/book";
 import Rent from "../pages/admin/rent";
 import AdminMember from "../pages/admin/member";
 import AddBook from "../pages/admin/book/add";
+import Home from "../pages/landing/home";
+import Profile from "../pages/my/profile/profile";
+import StatusBook from "../pages/my/book/status-book";
+import Register from "../pages/register/register";
 
 export const routes = [
   {
     path: "/auth/login",
     component: <Login />,
+  },
+  {
+    path: "/register", //register page
+    component: <Register />,
   },
 
   // ADMIN
@@ -35,13 +43,25 @@ export const routes = [
     component: <Rent />,
   },
 
-  // PENGGUNA
+  // PENGGUNA / Anggota perpustakaan
+  {
+    path: "/my/",
+    component: <Home />, //user home page
+  },
+  {
+    path: "/my/profile",
+    component: <Profile />, //profile page
+  },
   {
     path: "/my/book",
-    component: <Book />,
+    component: <Book />, //search result page
   },
   {
     path: "/my/book/:id",
-    component: <DetailBook />,
+    component: <DetailBook />, //detail book page
+  },
+  {
+    path: "/my/book/status",
+    component: <StatusBook />, //status information page
   },
 ];
