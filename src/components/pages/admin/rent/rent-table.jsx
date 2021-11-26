@@ -12,20 +12,17 @@ import {
   PopoverTrigger,
 } from "@chakra-ui/popover";
 import { useEffect, useMemo, useState } from "react";
-import { useMutation } from "react-query";
-import { deleteBook } from "../../../../modules/book/api";
 import { Table } from "../../../ui";
-import BookEditModal from "./book-edit-modal";
 
-const BookTable = ({ listBookQuery }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [dataModal, setDataModal] = useState({});
+const RentTable = ({ listBookQuery }) => {
+  //   const [isOpen, setIsOpen] = useState(false);
+  //   const [dataModal, setDataModal] = useState({});
 
-  const mutationDelete = useMutation((data) => deleteBook(data), {
-    onSuccess: () => {
-      listBookQuery.refetch();
-    },
-  });
+  //   const mutationDelete = useMutation((data) => deleteBook(data), {
+  //     onSuccess: () => {
+  //       listBookQuery.refetch();
+  //     },
+  //   });
 
   useEffect(() => {}, [listBookQuery]);
 
@@ -42,42 +39,24 @@ const BookTable = ({ listBookQuery }) => {
         },
       },
       {
-        Header: "Gambar Buku",
+        Header: "Status",
         accessor: () => {
-          return (
-            <Image
-              display="flex"
-              mx="auto"
-              src="gibbresh.png"
-              fallbackSrc="https://via.placeholder.com/150x200"
-            />
-          );
+          return <></>;
         }, // accessor is the "key" in the data
       },
       {
-        Header: "Nama Buku",
+        Header: "Nama",
         accessor: "judul_buku",
       },
       {
-        Header: "Category",
+        Header: "Judul Buku",
         accessor: "category.nama",
       },
       {
-        Header: "Genre",
-        accessor: (data) => {
-          return (
-            <Box display="flex" flexDir="wrap" experimental_spaceX={2}>
-              {data.genres.map((item) => (
-                <Badge>{item.nama}</Badge>
-              ))}
-            </Box>
-          );
-        },
+        Header: "Detail Info",
+        accessor: "",
       },
-      {
-        Header: "Stock",
-        accessor: "stok",
-      },
+
       {
         Header: "Action",
         accessor: (data, id) => {
@@ -86,8 +65,8 @@ const BookTable = ({ listBookQuery }) => {
               <Button
                 colorScheme="green"
                 onClick={() => {
-                  setIsOpen(true);
-                  setDataModal({ ...data, idRow: id });
+                  //   setIsOpen(true);
+                  //   setDataModal({ ...data, idRow: id });
                 }}
               >
                 <EditIcon />
@@ -105,7 +84,7 @@ const BookTable = ({ listBookQuery }) => {
                   <PopoverBody>
                     Apakah anda yakin ingin menghapus data ini?
                     <Box mt={6} float="right">
-                      <Button
+                      {/* <Button
                         colorScheme="red"
                         isLoading={mutationDelete.isLoading}
                         onClick={() =>
@@ -113,7 +92,7 @@ const BookTable = ({ listBookQuery }) => {
                         }
                       >
                         Delete
-                      </Button>
+                      </Button> */}
                     </Box>
                   </PopoverBody>
                 </PopoverContent>
@@ -129,14 +108,14 @@ const BookTable = ({ listBookQuery }) => {
   const data = listBookQuery.data.data;
   return (
     <>
-      <BookEditModal
+      {/* <BookEditModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         dataModal={dataModal}
-      />
+      /> */}
       <Table data={data} columns={columns} />
     </>
   );
 };
 
-export default BookTable;
+export default RentTable;

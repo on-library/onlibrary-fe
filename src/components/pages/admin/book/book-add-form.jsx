@@ -2,24 +2,40 @@ import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 import { Box, Divider, GridItem, SimpleGrid, Text } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router";
 import genreOptions from "../../../../data/genre-options";
 import { addBook } from "../../../../modules/book/api";
+import { getCategories } from "../../../../modules/category/api";
+import sendDateFormat from "../../../../utils/send-date-format";
 import Select from "../../../ui/select";
 
 const BookAddForm = ({ bookAddForm }) => {
   const navigate = useNavigate();
 
-  const mutation = useMutation((data) => addBook(data), {
-    onSuccess: () => {
-      navigate("/admin/book");
-    },
-  });
+  const categoryList = useQuery(["categories"], () => getCategories());
+
+  const mutation = useMutation(
+    (data) =>
+      addBook({
+        ...data,
+        stok: +data.stok,
+        tahun_terbit: sendDateFormat(data.tahun_terbit),
+      }),
+    {
+      onSuccess: () => {
+        navigate("/admin/book");
+      },
+    }
+  );
 
   const onSubmit = (data) => {
     mutation.mutate(data);
   };
+
+  if (categoryList.isLoading) {
+    return <Box>Loading...</Box>;
+  }
 
   return (
     <Box>
@@ -94,7 +110,7 @@ const BookAddForm = ({ bookAddForm }) => {
                 {...bookAddForm.register("genre")}
                 onChange={(data) =>
                   bookAddForm.setValue(
-                    "genre",
+                    "genres",
                     data.map((item) => item.value)
                   )
                 }
@@ -105,12 +121,19 @@ const BookAddForm = ({ bookAddForm }) => {
           <GridItem colSpan={[2, 2, 1, 1]}>
             <Box>
               <Text fontWeight="semibold">Kategori</Text>
-              <Select isMulti={true} options={genreOptions} />
+              <Select
+                options={categoryList.data.data.map((item) => {
+                  return { value: item.category_id, label: item.nama };
+                })}
+                onChange={(data) =>
+                  bookAddForm.setValue("category_id", data.value)
+                }
+              />
             </Box>
           </GridItem>
           <GridItem colSpan={2}>
             <Box width="30%">
-              <Text fontWeight="semibold">Stok *</Text>
+              <Text fontWeight="semibold">Stock *</Text>
               <Input
                 type="number"
                 mt={1}

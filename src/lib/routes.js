@@ -3,7 +3,7 @@ import Dashboard from "../pages/admin/dashboard";
 import DetailBook from "../pages/my/book/detail-book";
 import Book from "../pages/my/book/index";
 import AdminBook from "../pages/admin/book";
-import Rent from "../pages/admin/rent";
+import RentAdmin from "../pages/admin/rent";
 import AdminMember from "../pages/admin/member";
 import AddBook from "../pages/admin/book/add";
 import Home from "../pages/landing/home";
@@ -11,6 +11,7 @@ import Profile from "../pages/my/profile/profile";
 import StatusBook from "../pages/my/book/status-book";
 import Register from "../pages/register/register";
 import NotFound from "../pages/not-found";
+import Rent from "../pages/my/rent";
 
 export const routes = [
   {
@@ -41,7 +42,7 @@ export const routes = [
   },
   {
     path: "/admin/rent",
-    component: <Rent />,
+    component: <RentAdmin />,
   },
 
   // PENGGUNA / Anggota perpustakaan
@@ -52,6 +53,10 @@ export const routes = [
   {
     path: "/my/profile",
     component: <Profile />, //profile page
+  },
+  {
+    path: "/my/rent",
+    component: <Rent />, //status information page
   },
   {
     path: "/my/book",

@@ -1,7 +1,7 @@
 import { Image } from "@chakra-ui/image";
 import { Box, Heading } from "@chakra-ui/layout";
 
-const MainDetailBook = () => {
+const MainDetailBook = ({ queryBook }) => {
   return (
     <Box
       display="flex"
@@ -14,7 +14,7 @@ const MainDetailBook = () => {
         fallbackSrc="https://via.placeholder.com/240x168"
       />
       <Box>
-        <Heading>Dune</Heading>
+        <Heading>{queryBook.data?.data.judul_buku || "-"}</Heading>
       </Box>
     </Box>
   );

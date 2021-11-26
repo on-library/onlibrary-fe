@@ -1,10 +1,11 @@
+import LayoutMy from "../../../components/layouts/my/layout-my";
 import ProfileUser from "../../../components/pages/my/profile/profile-user";
 
 const Profile = () => {
   return (
-    <div>
+    <LayoutMy>
       <ProfileUser />
-    </div>
+    </LayoutMy>
   );
 };
 
