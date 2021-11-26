@@ -3,10 +3,14 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/breadcrumb";
-import { Box, Heading } from "@chakra-ui/layout";
+import { Box, Heading, Text } from "@chakra-ui/layout";
+import { useQuery } from "react-query";
 import LayoutAdmin from "../../components/layouts/admin/layout-admin";
+import RentTable from "../../components/pages/admin/rent/rent-table";
+import { getBook } from "../../modules/book/api";
 
 const Rent = () => {
+  const listBookQuery = useQuery(["book"], () => getBook());
   return (
     <LayoutAdmin>
       <Box>
@@ -17,13 +21,32 @@ const Rent = () => {
 
           <BreadcrumbItem isCurrentPage>
             <BreadcrumbLink href="/admin/member">
-              Anggota Perpustakaan
+              Daftar Peminjaman
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
       </Box>
-      <Heading mt={2}>Daftar Peminjaman</Heading>
-      <Box></Box>
+      <Box>
+        <Heading mt={2} textAlign="center">
+          Daftar Peminjaman
+        </Heading>
+        <Text textAlign="center">
+          Koleksi daftar peminjaman yang ada pada perpustakaan
+        </Text>
+      </Box>
+
+      <Box mt={4}>
+        {/* {listBookQuery.isLoading ? ( */}
+        {/* "" */}
+        {/* ) : ( */}
+        {listBookQuery.isLoading ? (
+          ""
+        ) : (
+          <RentTable listBookQuery={listBookQuery} />
+        )}
+
+        {/* )} */}
+      </Box>
     </LayoutAdmin>
   );
 };
