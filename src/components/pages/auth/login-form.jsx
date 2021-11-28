@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -18,12 +19,16 @@ import { useMutation } from "react-query";
 import { getProfile, login } from "../../../modules/auth/api";
 import { useNavigate } from "react-router";
 
+
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
+
 
   const [error, setError] = useState("");
 
@@ -56,6 +61,7 @@ const LoginForm = () => {
       navigate("/my");
     }
   });
+
 
   return (
     <Flex
@@ -119,6 +125,7 @@ const LoginForm = () => {
                 colorScheme="blue"
                 width="full"
                 isLoading={mutation.isLoading}
+
               >
                 Login
               </Button>
@@ -140,6 +147,7 @@ const LoginForm = () => {
               variant="outline"
               colorScheme="blue"
               width="full"
+              onClick={() => navigate("/register")}
             >
               Register
             </Button>

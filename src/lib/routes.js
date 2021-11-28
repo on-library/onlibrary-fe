@@ -16,7 +16,6 @@ import LandingPage from "../pages/landing";
 
 export const routes = [
   {
-    path: "/",
     component: <LandingPage />,
   },
   {
@@ -66,6 +65,10 @@ export const routes = [
     path: "/my/profile",
     component: <Profile />, //profile page
     guard: 1,
+  },
+  {
+    path: "/my/profile/edit",
+    component: <Profile />, //sunting profile page
   },
   {
     path: "/my/rent",
