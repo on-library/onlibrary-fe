@@ -67,8 +67,8 @@ const BookTable = ({ listBookQuery }) => {
         accessor: (data) => {
           return (
             <Box display="flex" flexDir="wrap" experimental_spaceX={2}>
-              {data.genres.map((item) => (
-                <Badge>{item.nama}</Badge>
+              {data?.genres?.map((item) => (
+                <Badge>{item?.nama}</Badge>
               ))}
             </Box>
           );

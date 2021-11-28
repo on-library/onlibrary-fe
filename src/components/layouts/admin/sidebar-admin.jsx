@@ -6,6 +6,13 @@ const SidebarAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let nowPath = location.pathname.split("/")[2];
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("guard_role");
+    navigate("/auth/login");
+  };
+
   return (
     <Box
       display={{ base: "none", lg: "block" }}
@@ -55,6 +62,23 @@ const SidebarAdmin = () => {
             </Box>
           );
         })}
+        <Box
+          h="44px"
+          display="flex"
+          justifyContent="left"
+          pl={4}
+          alignItems="center"
+          // borderBottom="1px"
+          fontSize="md"
+          py={4}
+          cursor="pointer"
+          _hover={{
+            bg: "gray.200",
+          }}
+          onClick={() => logout()}
+        >
+          Logout
+        </Box>
       </Box>
     </Box>
   );

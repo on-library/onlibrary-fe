@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Flex,
@@ -13,6 +13,10 @@ import {
   FormHelperText,
   Divider,
 } from "@chakra-ui/react";
+import { Alert, AlertIcon } from "@chakra-ui/alert";
+import { useMutation } from "react-query";
+import { getProfile, login } from "../../../modules/auth/api";
+import { useNavigate } from "react-router";
 
 const LoginForm = () => {
   const {
@@ -21,8 +25,37 @@ const LoginForm = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation((data) => login(data), {
+    onSuccess: async (data) => {
+      localStorage.setItem("token", data.token);
+      const profile = await getProfile();
+      localStorage.setItem("guard_role", profile.user.role);
+      if (profile.user.role == 1) {
+        // eslint-disable-next-line no-restricted-globals
+        location.href = "/my/";
+      } else if (profile.user.role == 2) {
+        // eslint-disable-next-line no-restricted-globals
+        location.href = "/admin/";
+      }
+    },
+    onError: (err) => {
+      setError(err.response.data.message);
+    },
+  });
+
+  const onSubmit = (data) => mutation.mutate(data);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/my");
+    }
+  });
 
   return (
     <Flex
@@ -40,6 +73,15 @@ const LoginForm = () => {
         alignItems="center"
       >
         <Heading>OnLibrary</Heading>
+        {error ? (
+          <Alert status="error">
+            <AlertIcon />
+            {error}
+          </Alert>
+        ) : (
+          ""
+        )}
+
         <Box minW={{ base: "90%", md: "400px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack
@@ -54,7 +96,7 @@ const LoginForm = () => {
                   <Input
                     id="usernameLogin"
                     placeholder="Username"
-                    {...register("Username", { required: true, maxLength: 80 })}
+                    {...register("username", { required: true, maxLength: 80 })}
                   />
                 </InputGroup>
               </FormControl>
@@ -64,7 +106,7 @@ const LoginForm = () => {
                     id="passwordLogin"
                     type="password"
                     placeholder="Password"
-                    {...register("Password", { required: true })}
+                    {...register("password", { required: true })}
                   />
                 </InputGroup>
                 <FormHelperText textAlign="right">
@@ -76,7 +118,7 @@ const LoginForm = () => {
                 type="submit"
                 colorScheme="blue"
                 width="full"
-                isLoading={isSubmitting}
+                isLoading={mutation.isLoading}
               >
                 Login
               </Button>

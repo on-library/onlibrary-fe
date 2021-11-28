@@ -15,23 +15,40 @@ import SynopsisBook from "../../../components/pages/my/book/detailed-book/synops
 import DetailBookSection from "../../../components/pages/my/book/detailed-book/detail-book-section";
 import MainDetailBook from "../../../components/pages/my/book/detailed-book/main-detail-book";
 import { useLocation } from "react-router";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getDetailBook } from "../../../modules/book/api";
+import { addRent } from "../../../modules/rent/api";
+import RentSuccessModal from "../../../components/pages/my/book/detailed-book/rent-success-modal";
+import { useState } from "react";
 
 const DetailBook = () => {
-  //TODO: Query book use react-query
-  // const queryBook = useQuery();
   const { pathname } = useLocation();
+  const [isOpen, setIsOpen] = useState();
+  const [dataBuku, setDataBuku] = useState();
   const idBook = pathname.split("/")[3];
-  console.log(idBook);
 
   const queryBook = useQuery(["book", idBook], () => getDetailBook(idBook), {
     enabled: !!idBook,
   });
 
-  // console.log(queryBook);
+  const mutation = useMutation(() => addRent({ book_id: idBook }), {
+    onSuccess: (data) => {
+      setIsOpen(true);
+      setDataBuku(data);
+    },
+  });
+
+  const onSubmit = () => {
+    mutation.mutate();
+  };
+
   return (
     <LayoutMy>
+      <RentSuccessModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        dataModal={dataBuku}
+      />
       {queryBook.isLoading ? (
         "loading..."
       ) : (
@@ -50,6 +67,7 @@ const DetailBook = () => {
               <Button
                 colorScheme="purple"
                 width={{ base: "100%", lg: "200px" }}
+                onClick={() => onSubmit()}
               >
                 Pinjam
               </Button>

@@ -7,10 +7,11 @@ import { Box, Heading, Text } from "@chakra-ui/layout";
 import { useQuery } from "react-query";
 import LayoutAdmin from "../../components/layouts/admin/layout-admin";
 import RentTable from "../../components/pages/admin/rent/rent-table";
-import { getBook } from "../../modules/book/api";
+import { getRents } from "../../modules/rent/api";
 
 const Rent = () => {
-  const listBookQuery = useQuery(["book"], () => getBook());
+  const listRentQuery = useQuery(["rents"], () => getRents());
+
   return (
     <LayoutAdmin>
       <Box>
@@ -39,10 +40,10 @@ const Rent = () => {
         {/* {listBookQuery.isLoading ? ( */}
         {/* "" */}
         {/* ) : ( */}
-        {listBookQuery.isLoading ? (
+        {listRentQuery.isLoading ? (
           ""
         ) : (
-          <RentTable listBookQuery={listBookQuery} />
+          <RentTable listRentQuery={listRentQuery} />
         )}
 
         {/* )} */}
