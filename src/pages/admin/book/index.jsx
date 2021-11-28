@@ -15,7 +15,7 @@ import { getBook } from "../../../modules/book/api";
 const Book = () => {
   const navigate = useNavigate();
 
-  const listBookQuery = useQuery(["book"], () => getBook());
+  const listBookQuery = useQuery(["rents"], () => getBook());
 
   return (
     <LayoutAdmin>

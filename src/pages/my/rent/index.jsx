@@ -1,26 +1,34 @@
-import { Box, Heading, Stack, Text } from "@chakra-ui/layout";
-import { useNavigate } from "react-router";
+import { Box, Text } from "@chakra-ui/layout";
 import { useQuery } from "react-query";
-
 import LayoutMy from "../../../components/layouts/my/layout-my";
-import BookTable from "../../../components/pages/admin/book/book-table";
-import { getBook } from "../../../modules/book/api";
+import RentTableMy from "../../../components/pages/my/rent/rent-table-my";
+import { getProfile } from "../../../modules/auth/api";
 
-const RentMy = () => {
-  const navigate = useNavigate();
-  const listBookQuery = useQuery(["book"], () => getBook());
+const Rent = () => {
+  const profileQuery = useQuery(
+    ["profiled", localStorage.getItem("token")],
+    () => getProfile()
+  );
 
   return (
     <LayoutMy>
-      <Box mt={2} justifyContent="space-between">
-        <Stack direction="column" justifyContent="center" alignItems="center">
-          <Box>
-            <Heading>STATUS PEMINJAMAN</Heading>
-            <Text align="center">Daftar dan status buku yang ada pinjam</Text>
-          </Box>
-          <Box></Box>
-        </Stack>
+      <Box
+        bg="gray.300"
+        p="3"
+        borderRadius="md"
+        borderWidth="1px"
+        borderColor="gray.500"
+      >
+        <Text textTransform="uppercase">Status Peminjaman Buku</Text>
       </Box>
+
+      {profileQuery.isLoading ? (
+        "Loading..."
+      ) : (
+        <Box mt={8}>
+          <RentTableMy profileQuery={profileQuery} />
+        </Box>
+      )}
     </LayoutMy>
   );
 };

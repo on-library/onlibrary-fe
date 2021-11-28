@@ -8,10 +8,17 @@ import {
   InputRightElement,
 } from "@chakra-ui/input";
 import { Box, Divider, Stack, Text } from "@chakra-ui/layout";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router";
+import { getProfile } from "../../../modules/auth/api";
 
 const HeaderMy = () => {
   const navigate = useNavigate();
+  const profileQuery = useQuery(
+    ["profile", localStorage.getItem("token")],
+    () => getProfile()
+  );
+
   return (
     <Box>
       <Box
@@ -27,7 +34,7 @@ const HeaderMy = () => {
             textTransform="uppercase"
             fontWeight="semibold"
             cursor="pointer"
-            onClick={() => navigate("/my/book/")}
+            onClick={() => navigate("/my/")}
             _hover={{ textColor: "purple.500" }}
           >
             Beranda
