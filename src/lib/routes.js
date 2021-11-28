@@ -11,9 +11,13 @@ import Profile from "../pages/my/profile/profile";
 import StatusBook from "../pages/my/book/status-book";
 import Register from "../pages/register/register";
 import NotFound from "../pages/not-found";
-import Rent from "../pages/my/rent";
+import RentMy from "../pages/my/rent";
 
 export const routes = [
+  {
+    path: "/",
+    component: <Login />,
+  },
   {
     path: "/auth/login",
     component: <Login />,
@@ -55,8 +59,12 @@ export const routes = [
     component: <Profile />, //profile page
   },
   {
+    path: "/my/profile/edit",
+    component: <Profile />, //sunting profile page
+  },
+  {
     path: "/my/rent",
-    component: <Rent />, //status information page
+    component: <RentMy />, //status information page
   },
   {
     path: "/my/book",
@@ -68,7 +76,7 @@ export const routes = [
   },
   {
     path: "/my/book/status",
-    component: <StatusBook />, //status information page
+    component: <StatusBook />, //diubah jadi rent
   },
   {
     path: "*",

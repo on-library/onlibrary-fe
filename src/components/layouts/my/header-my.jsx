@@ -1,4 +1,5 @@
 import { Avatar } from "@chakra-ui/avatar";
+import { Button } from "@chakra-ui/button";
 import { CheckIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Input,
@@ -6,7 +7,7 @@ import {
   InputLeftElement,
   InputRightElement,
 } from "@chakra-ui/input";
-import { Box, Divider, Text } from "@chakra-ui/layout";
+import { Box, Divider, Stack, Text } from "@chakra-ui/layout";
 import { useNavigate } from "react-router";
 
 const HeaderMy = () => {
@@ -34,6 +35,7 @@ const HeaderMy = () => {
         </Box>
         <Box w="15%" py={2}>
           <Text
+            align="center"
             fontSize="lg"
             cursor="pointer"
             textTransform="uppercase"
@@ -52,9 +54,30 @@ const HeaderMy = () => {
             <InputRightElement children={<SearchIcon color="gray.300" />} />
           </InputGroup>
         </Box>
-        <Box w="20%" display="flex" flexDir="column" alignItems="center">
-          <Avatar />
-          <Text>User Profile</Text>
+        <Box w="20%" display="flex" flexDir="column" alignItems="center" py={2}>
+          {/* <Avatar /> */}
+          {/* <Text>User Profile</Text> */}
+          <Stack direction="row">
+            {" "}
+            <Button
+              borderRadius={4}
+              // variant="outline"
+              colorScheme="blue"
+              width="full"
+              onClick={() => navigate("/my/profile")}
+            >
+              Sunting Profil
+            </Button>
+            <Button
+              borderRadius={4}
+              // variant="outline"
+              colorScheme="red"
+              width="full"
+              onClick={() => navigate("/auth/login")}
+            >
+              Logout
+            </Button>
+          </Stack>
         </Box>
       </Box>
       <Divider width={{ base: "90%", lg: "80%" }} mx="auto" />

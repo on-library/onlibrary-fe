@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import {
   Flex,
@@ -13,16 +14,20 @@ import {
   FormHelperText,
   Divider,
 } from "@chakra-ui/react";
+import { useMutation } from "react-query";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <Flex
@@ -77,6 +82,7 @@ const LoginForm = () => {
                 colorScheme="blue"
                 width="full"
                 isLoading={isSubmitting}
+                //onClick={() => navigate("/my")}
               >
                 Login
               </Button>
@@ -98,6 +104,7 @@ const LoginForm = () => {
               variant="outline"
               colorScheme="blue"
               width="full"
+              onClick={() => navigate("/register")}
             >
               Register
             </Button>

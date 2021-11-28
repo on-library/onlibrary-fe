@@ -5,7 +5,7 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/button";
 
-const ProfileUser = () => {
+const EditProfileUser = () => {
   const {
     register,
     handleSubmit,
@@ -25,7 +25,7 @@ const ProfileUser = () => {
       alignItems="center"
     >
       <Stack direction="column" spacing={4} alignItems="center">
-        <Heading>Data Profil</Heading>
+        <Heading>DATA PROFIL</Heading>
         <Divider borderColor="gray.600" />
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" spacing={8} p="1rem">
@@ -80,4 +80,4 @@ const ProfileUser = () => {
   );
 };
 
-export default ProfileUser;
+export default EditProfileUser;
