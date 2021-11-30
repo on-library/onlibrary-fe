@@ -17,8 +17,6 @@ import {
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { useMutation } from "react-query";
 import { getProfile, login } from "../../../modules/auth/api";
-import { useNavigate } from "react-router";
-
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,10 +27,7 @@ const LoginForm = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-
   const [error, setError] = useState("");
-
-  const navigate = useNavigate();
 
   const mutation = useMutation((data) => login(data), {
     onSuccess: async (data) => {
@@ -61,7 +56,6 @@ const LoginForm = () => {
       navigate("/my");
     }
   });
-
 
   return (
     <Flex
@@ -94,13 +88,12 @@ const LoginForm = () => {
               direction="column"
               spacing={4}
               p="1rem"
-              backgroundColor="whiteAlpha.900"
+              backgroundColor="white"
               boxShadow="md"
             >
               <FormControl isRequired>
                 <InputGroup>
                   <Input
-                    id="usernameLogin"
                     placeholder="Username"
                     {...register("username", { required: true, maxLength: 80 })}
                   />
@@ -109,7 +102,6 @@ const LoginForm = () => {
               <FormControl isRequired>
                 <InputGroup>
                   <Input
-                    id="passwordLogin"
                     type="password"
                     placeholder="Password"
                     {...register("password", { required: true })}
@@ -125,7 +117,6 @@ const LoginForm = () => {
                 colorScheme="blue"
                 width="full"
                 isLoading={mutation.isLoading}
-
               >
                 Login
               </Button>
@@ -147,7 +138,7 @@ const LoginForm = () => {
               variant="outline"
               colorScheme="blue"
               width="full"
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/auth/register")}
             >
               Register
             </Button>

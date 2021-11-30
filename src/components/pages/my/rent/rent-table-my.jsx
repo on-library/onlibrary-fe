@@ -87,9 +87,12 @@ const RentTableMy = ({ profileQuery }) => {
           return (
             <>
               {data.is_extend_confirm === 0 && data.status_pinjam === 3 ? (
-                <Button>Menunggu Status Perpanjangan</Button>
+                <Button width="full" disabled>
+                  Menunggu Status Perpanjangan
+                </Button>
               ) : data.is_extend_confirm === 0 && data.status_pinjam > 1 ? (
                 <Button
+                  width="full"
                   colorScheme="purple"
                   onClick={() => {
                     setIsOpen(true);

@@ -1,35 +1,38 @@
-import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
-import { CheckIcon, SearchIcon } from "@chakra-ui/icons";
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-} from "@chakra-ui/input";
-import { Box, Divider, Stack, Text } from "@chakra-ui/layout";
+import { Flex, Box, Divider, Stack, Text } from "@chakra-ui/layout";
+import { Spacer } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router";
 import { getProfile } from "../../../modules/auth/api";
 
 const HeaderMy = () => {
   const navigate = useNavigate();
+
   const profileQuery = useQuery(
     ["profile", localStorage.getItem("token")],
     () => getProfile()
   );
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("guard_role");
+    navigate("/auth/login");
+  };
+
   return (
     <Box>
-      <Box
-        d="flex"
+      <Flex
         height="100px"
         py={4}
         width={{ base: "90%", lg: "80%" }}
         mx="auto"
+        alignItems="center"
       >
-        <Box w="15%" alignSelf="start" py={2}>
+        {/* <Text>{profileQuery.data?.user?.username}</Text> */}
+        <Box>
           <Text
+            mr="24"
+            align="center"
             fontSize="lg"
             textTransform="uppercase"
             fontWeight="semibold"
@@ -40,7 +43,7 @@ const HeaderMy = () => {
             Beranda
           </Text>
         </Box>
-        <Box w="15%" py={2}>
+        <Box>
           <Text
             align="center"
             fontSize="lg"
@@ -50,25 +53,14 @@ const HeaderMy = () => {
             onClick={() => navigate("/my/rent/")}
             _hover={{ textColor: "purple.500" }}
           >
-            Status
-            <br />
-            Peminjaman
+            Status Peminjaman
           </Text>
         </Box>
-        <Box w="38%" mx="2%" py={2}>
-          <InputGroup>
-            <Input placeholder="Cari...." />
-            <InputRightElement children={<SearchIcon color="gray.300" />} />
-          </InputGroup>
-        </Box>
-        <Box w="20%" display="flex" flexDir="column" alignItems="center" py={2}>
-          {/* <Avatar /> */}
-          {/* <Text>User Profile</Text> */}
+        <Spacer />
+        <Box>
           <Stack direction="row">
-            {" "}
             <Button
               borderRadius={4}
-              // variant="outline"
               colorScheme="blue"
               width="full"
               onClick={() => navigate("/my/profile")}
@@ -77,16 +69,15 @@ const HeaderMy = () => {
             </Button>
             <Button
               borderRadius={4}
-              // variant="outline"
               colorScheme="red"
               width="full"
-              onClick={() => navigate("/auth/login")}
+              onClick={() => logout()}
             >
               Logout
             </Button>
           </Stack>
         </Box>
-      </Box>
+      </Flex>
       <Divider width={{ base: "90%", lg: "80%" }} mx="auto" />
     </Box>
   );

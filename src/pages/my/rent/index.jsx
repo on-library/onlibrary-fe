@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/layout";
+import { Box, Heading, Text } from "@chakra-ui/layout";
 import { useQuery } from "react-query";
 import LayoutMy from "../../../components/layouts/my/layout-my";
 import RentTableMy from "../../../components/pages/my/rent/rent-table-my";
@@ -12,15 +12,8 @@ const Rent = () => {
 
   return (
     <LayoutMy>
-      <Box
-        bg="gray.300"
-        p="3"
-        borderRadius="md"
-        borderWidth="1px"
-        borderColor="gray.500"
-      >
-        <Text textTransform="uppercase">Status Peminjaman Buku</Text>
-      </Box>
+      <Heading>Status Peminjaman Buku</Heading>
+      <Text>Daftar status buku</Text>
 
       {profileQuery.isLoading ? (
         "Loading..."
@@ -33,4 +26,4 @@ const Rent = () => {
   );
 };
 
-export default RentMy;
+export default Rent;
