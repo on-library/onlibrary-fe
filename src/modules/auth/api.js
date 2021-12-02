@@ -2,6 +2,7 @@ import { fetchApi } from "../../utils/fetcher";
 
 const ENTRY_API = "auth";
 
+
 export const login = async ({ username, password }) => {
   const response = await fetchApi.post(ENTRY_API + "/login", {
     username,

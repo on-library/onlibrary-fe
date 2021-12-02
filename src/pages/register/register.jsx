@@ -1,7 +1,12 @@
 import { Box } from "@chakra-ui/layout";
+import RegisterForm from "../../components/pages/auth/register-form";
 
 const Register = () => {
-  return <Box>Ini register page</Box>;
+  return (
+    <Box>
+      <RegisterForm />
+    </Box>
+  );
 };
 
 export default Register;

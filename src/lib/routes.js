@@ -16,7 +16,6 @@ import LandingPage from "../pages/landing";
 
 export const routes = [
   {
-    path: "/",
     component: <LandingPage />,
   },
   {
@@ -25,7 +24,7 @@ export const routes = [
     guard: 0,
   },
   {
-    path: "/register", //register page
+    path: "/auth/register", //register page
     component: <Register />,
   },
 
@@ -64,7 +63,7 @@ export const routes = [
   },
   {
     path: "/my/profile",
-    component: <Profile />, //profile page
+    component: <Profile />, //profile edit page
     guard: 1,
   },
   {
@@ -74,7 +73,7 @@ export const routes = [
   },
   {
     path: "/my/book",
-    component: <Book />, //search result page
+    component: <Book />, //might delete
     guard: 1,
   },
   {
@@ -84,8 +83,7 @@ export const routes = [
   },
   {
     path: "/my/book/status",
-    component: <StatusBook />, //status information page
-    guard: 1,
+    component: <StatusBook />, //might delete
   },
   {
     path: "*",
