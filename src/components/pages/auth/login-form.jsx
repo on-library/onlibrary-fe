@@ -36,10 +36,10 @@ const LoginForm = () => {
       localStorage.setItem("guard_role", profile.user.role);
       if (profile.user.role == 1) {
         // eslint-disable-next-line no-restricted-globals
-        location.href = "/my/";
+        location.href = "/#/my/";
       } else if (profile.user.role == 2) {
         // eslint-disable-next-line no-restricted-globals
-        location.href = "/admin/";
+        location.href = "/#/admin/";
       }
     },
     onError: (err) => {

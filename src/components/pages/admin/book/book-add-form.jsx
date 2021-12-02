@@ -30,7 +30,8 @@ const BookAddForm = ({ bookAddForm }) => {
   );
 
   const onSubmit = (data) => {
-    mutation.mutate(data);
+    console.log(data);
+    // mutation.mutate(data);
   };
 
   if (categoryList.isLoading) {
@@ -47,16 +48,11 @@ const BookAddForm = ({ bookAddForm }) => {
               <Input
                 mt={1}
                 {...bookAddForm.register("judul_buku", {
-                  required: "Required input",
+                  required: "* Required input",
                 })}
                 isInvalid={!!bookAddForm.formState.errors.judul_buku}
               />
-              <Text
-                fontSize="sm"
-                mt={1}
-                textColor="red.500"
-                fontWeight="medium"
-              >
+              <Text fontSize="sm" mt={1} textColor="red.500">
                 {bookAddForm.formState.errors.judul_buku
                   ? bookAddForm.formState.errors?.judul_buku.message
                   : ""}
@@ -70,10 +66,15 @@ const BookAddForm = ({ bookAddForm }) => {
               <Input
                 mt={1}
                 {...bookAddForm.register("penulis", {
-                  required: "Required input",
+                  required: "* Required input",
                 })}
                 isInvalid={!!bookAddForm.formState.errors.penulis}
               />
+              <Text fontSize="sm" mt={1} textColor="red.500">
+                {bookAddForm.formState.errors.penulis
+                  ? bookAddForm.formState.errors?.penulis.message
+                  : ""}
+              </Text>
             </Box>
           </GridItem>
 
@@ -83,10 +84,15 @@ const BookAddForm = ({ bookAddForm }) => {
               <Input
                 mt={1}
                 {...bookAddForm.register("penerbit", {
-                  required: "Required input",
+                  required: "* Required input",
                 })}
                 isInvalid={!!bookAddForm.formState.errors.penerbit}
               />
+              <Text fontSize="sm" mt={1} textColor="red.500">
+                {bookAddForm.formState.errors.penerbit
+                  ? bookAddForm.formState.errors?.penerbit.message
+                  : ""}
+              </Text>
             </Box>
           </GridItem>
 
@@ -96,8 +102,16 @@ const BookAddForm = ({ bookAddForm }) => {
               <Input
                 type="date"
                 mt={1}
-                {...bookAddForm.register("tahun_terbit")}
+                isInvalid={!!bookAddForm.formState.errors.tahun_terbit}
+                {...bookAddForm.register("tahun_terbit", {
+                  required: "* Required input",
+                })}
               />
+              <Text fontSize="sm" mt={1} textColor="red.500">
+                {bookAddForm.formState.errors.tahun_terbit
+                  ? bookAddForm.formState.errors?.tahun_terbit.message
+                  : ""}
+              </Text>
             </Box>
           </GridItem>
 
@@ -107,7 +121,9 @@ const BookAddForm = ({ bookAddForm }) => {
               <Select
                 isMulti={true}
                 options={genreOptions}
-                {...bookAddForm.register("genre")}
+                {...bookAddForm.register("genres", {
+                  required: "* Required input",
+                })}
                 onChange={(data) =>
                   bookAddForm.setValue(
                     "genres",
@@ -115,6 +131,13 @@ const BookAddForm = ({ bookAddForm }) => {
                   )
                 }
               />
+              {!!bookAddForm.formState.errors.genres ? (
+                <Text fontSize="sm" textColor="red.500">
+                  {bookAddForm.formState.errors.genres.message}
+                </Text>
+              ) : (
+                ""
+              )}
             </Box>
           </GridItem>
 
@@ -122,6 +145,9 @@ const BookAddForm = ({ bookAddForm }) => {
             <Box>
               <Text fontWeight="semibold">Kategori</Text>
               <Select
+                {...bookAddForm.register("category_id", {
+                  required: "* Required Input",
+                })}
                 options={categoryList.data.data.map((item) => {
                   return { value: item.category_id, label: item.nama };
                 })}
@@ -129,6 +155,13 @@ const BookAddForm = ({ bookAddForm }) => {
                   bookAddForm.setValue("category_id", data.value)
                 }
               />
+              {!!bookAddForm.formState.errors.category_id ? (
+                <Text fontSize="sm" textColor="red.500">
+                  {bookAddForm.formState.errors.category_id.message}
+                </Text>
+              ) : (
+                ""
+              )}
             </Box>
           </GridItem>
           <GridItem colSpan={2}>
@@ -138,16 +171,11 @@ const BookAddForm = ({ bookAddForm }) => {
                 type="number"
                 mt={1}
                 {...bookAddForm.register("stok", {
-                  required: "Required Input",
+                  required: "* Required Input",
                 })}
                 isInvalid={!!bookAddForm.formState.errors.stok}
               />
-              <Text
-                fontSize="sm"
-                mt={1}
-                textColor="red.500"
-                fontWeight="medium"
-              >
+              <Text fontSize="sm" mt={1} textColor="red.500">
                 {bookAddForm.formState.errors.stok
                   ? bookAddForm.formState.errors?.stok.message
                   : ""}
@@ -171,12 +199,18 @@ const BookAddForm = ({ bookAddForm }) => {
               <Text fontWeight="semibold">Deskripsi Buku</Text>
               <Textarea
                 mt={1}
+                rows={8}
                 {...bookAddForm.register("deskripsi_buku", {
-                  required: "Required input",
+                  required: "* Required input",
                 })}
                 isInvalid={!!bookAddForm.formState.errors.deskripsi_buku}
               />
             </Box>
+            <Text fontSize="sm" mt={1} textColor="red.500">
+              {bookAddForm.formState.errors.deskripsi_buku
+                ? bookAddForm.formState.errors?.deskripsi_buku.message
+                : ""}
+            </Text>
           </GridItem>
         </SimpleGrid>
 

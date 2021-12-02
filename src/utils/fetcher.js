@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const fetchApi = axios.create({
-  baseURL: "http://ec2-3-16-28-30.us-east-2.compute.amazonaws.com:8080/api/",
+  baseURL: "http://localhost:8080/api/",
 });
 
 fetchApi.interceptors.request.use((config) => {

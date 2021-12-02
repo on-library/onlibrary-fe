@@ -14,3 +14,8 @@ export const getProfile = async () => {
   const response = await fetchApi.get(ENTRY_API + "/profile");
   return response.data;
 };
+
+export const getListAuth = async () => {
+  const response = await fetchApi.get(ENTRY_API + "/all");
+  return response.data;
+};

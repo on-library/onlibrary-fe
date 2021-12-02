@@ -112,7 +112,7 @@ const BookTable = ({ listBookQuery }) => {
                           mutationDelete.mutate({ book_id: data.id })
                         }
                       >
-                        Delete
+                        Hapus
                       </Button>
                     </Box>
                   </PopoverBody>

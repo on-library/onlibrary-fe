@@ -30,8 +30,17 @@ const ExtendRequestModal = ({ isOpen, onClose, dataModal, mutationExtend }) => {
               <Text mb={2}>Alasan Perpanjangan</Text>
               <Textarea
                 rows="8"
-                {...editForm.register("alasan_perpanjangan")}
+                {...editForm.register("alasan_perpanjangan", {
+                  required: "Harap isi kolom alasan perpanjangan",
+                })}
               />
+              {!!editForm.formState.errors.alasan_perpanjangan ? (
+                <Text fontSize="sm">
+                  {editForm.formState.errors.alasan_perpanjangan.message}
+                </Text>
+              ) : (
+                ""
+              )}
             </Box>
           </Box>
         </form>

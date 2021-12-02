@@ -1,6 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/provider";
 import { QueryClientProvider } from "react-query";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import RedirectToLanding from "./components/redirect-to-landing";
 import queryClient from "./lib/query-client";
 import { routes } from "./lib/routes";
