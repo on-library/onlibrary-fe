@@ -13,6 +13,8 @@ import Register from "../pages/register/register";
 import NotFound from "../pages/not-found";
 import Rent from "../pages/my/rent";
 import LandingPage from "../pages/landing";
+import RegisterSuccess from "../pages/register/success";
+import Verify from "../pages/auth/verify";
 
 export const routes = [
   {
@@ -24,8 +26,17 @@ export const routes = [
     guard: 0,
   },
   {
-    path: "/auth/register", //register page
+    //register page
+    path: "/auth/register",
     component: <Register />,
+  },
+  {
+    path: "/auth/register/success",
+    component: <RegisterSuccess />,
+  },
+  {
+    path: "/auth/verify/:code",
+    component: <Verify />,
   },
 
   // ADMIN

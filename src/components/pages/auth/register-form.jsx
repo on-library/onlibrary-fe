@@ -1,13 +1,20 @@
 import { useNavigate } from "react-router";
-import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Flex, Heading, Input, Button, Stack, Box } from "@chakra-ui/react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { useMutation } from "react-query";
+import { postRegister } from "../../../modules/auth/api";
+import sendDateFormat from "../../../utils/send-date-format";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+
+  const mutation = useMutation((data) => postRegister(data), {
+    onSuccess: () => {
+      navigate("/auth/register/success");
+    },
+  });
 
   const {
     register,
@@ -15,17 +22,11 @@ const RegisterForm = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const [error, setError] = useState("");
-
-  const onSubmit = (data) => console.log(data);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (token) {
-  //     navigate("/my");
-  //   }
-  // });
+  const onSubmit = (data) =>
+    mutation.mutate({
+      ...data,
+      tanggal_lahir: sendDateFormat(data.tanggal_lahir),
+    });
 
   return (
     <Flex
@@ -43,7 +44,14 @@ const RegisterForm = () => {
         alignItems="center"
       >
         <Heading>Registrasi Akun</Heading>
-
+        {mutation.error ? (
+          <Alert status="error">
+            <AlertIcon />
+            {mutation.error.response.data.message}
+          </Alert>
+        ) : (
+          ""
+        )}
         <Box minW={{ base: "90%", md: "600px" }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack
@@ -57,10 +65,11 @@ const RegisterForm = () => {
                 <FormLabel>Nama Pengguna</FormLabel>
                 <Input
                   placeholder="Nama"
-                  {...register("nama", {
+                  {...register("name", {
                     required: true,
                     minLength: 6,
                   })}
+                  isInvalid={!!errors.name}
                 />
                 <FormLabel mt={2}>Email</FormLabel>
                 <Input
@@ -71,6 +80,7 @@ const RegisterForm = () => {
                     minLength: 6,
                     pattern: /^\S+@\S+$/i,
                   })}
+                  isInvalid={!!errors.email}
                 />
                 <FormLabel mt={2}>NIM</FormLabel>
                 <Input
@@ -81,31 +91,26 @@ const RegisterForm = () => {
                     minLength: 15,
                     maxLength: 15,
                   })}
+                  isInvalid={!!errors.nim}
                 />
                 <FormLabel mt={2}>Tanggal Lahir</FormLabel>
                 <Input
-                  type="datetime-local"
+                  type="date"
                   placeholder="TTL"
-                  {...register("ttl", {
+                  {...register("tanggal_lahir", {
                     required: true,
                     minLength: 6,
                   })}
+                  isInvalid={!!errors.tanggal_lahir}
                 />
                 <FormLabel mt={2}>Alamat</FormLabel>
                 <Input
                   placeholder="Alamat"
-                  {...register("alamat", {
+                  {...register("address", {
                     required: true,
                     minLength: 6,
                   })}
-                />
-                <FormLabel mt={2}>Asal</FormLabel>
-                <Input
-                  placeholder="Asal"
-                  {...register("asal", {
-                    required: true,
-                    minLength: 6,
-                  })}
+                  isInvalid={!!errors.address}
                 />
                 <FormLabel mt={2}>Username</FormLabel>
                 <Input
@@ -115,6 +120,7 @@ const RegisterForm = () => {
                     minLength: 6,
                     pattern: /^[a-z0-9]+$/i,
                   })}
+                  isInvalid={!!errors.username}
                 />
                 <FormLabel mt={2}>Password</FormLabel>
                 <Input
@@ -125,6 +131,7 @@ const RegisterForm = () => {
                     minLength: 6,
                     pattern: /^[a-z0-9]+$/i,
                   })}
+                  isInvalid={!!errors.password}
                 />
               </FormControl>
               <Stack direction="row">
@@ -134,18 +141,20 @@ const RegisterForm = () => {
                   variant="outline"
                   colorScheme="blue"
                   width="full"
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate("/auth/login")}
                 >
                   Kembali
                 </Button>
                 <Button
+                  isLoading={mutation.isLoading}
+                  type="submit"
                   borderRadius={4}
                   type="submit"
                   colorScheme="blue"
                   width="full"
                   // onClick={() => navigate("/auth/login")}
                 >
-                  Selanjutnya
+                  Daftarkan diri
                 </Button>
               </Stack>
             </Stack>

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -21,13 +21,13 @@ import { getProfile, login } from "../../../modules/auth/api";
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm();
+  const location = useLocation();
+
+  const { register, handleSubmit } = useForm();
 
   const [error, setError] = useState("");
+
+  const status = new URLSearchParams(location.search).get("status");
 
   const mutation = useMutation((data) => login(data), {
     onSuccess: async (data) => {
@@ -77,6 +77,15 @@ const LoginForm = () => {
           <Alert status="error">
             <AlertIcon />
             {error}
+          </Alert>
+        ) : (
+          ""
+        )}
+
+        {status === "success_verify" ? (
+          <Alert status="success">
+            <AlertIcon />
+            Akun anda berhasil diverifikasi
           </Alert>
         ) : (
           ""
