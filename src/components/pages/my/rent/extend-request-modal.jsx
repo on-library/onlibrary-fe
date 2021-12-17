@@ -51,7 +51,10 @@ const ExtendRequestModal = ({ isOpen, onClose, dataModal, mutationExtend }) => {
           <Button variant="ghost" mr={3} onClick={onClose}>
             Close
           </Button>
-          <Button onClick={() => onSubmit()} colorScheme="purple">
+          <Button
+            onClick={editForm.handleSubmit(onSubmit)}
+            colorScheme="purple"
+          >
             Minta Perpanjangan
           </Button>
         </Box>

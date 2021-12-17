@@ -6,7 +6,7 @@ import AdminBook from "../pages/admin/book";
 import RentAdmin from "../pages/admin/rent";
 import AdminMember from "../pages/admin/member";
 import AddBook from "../pages/admin/book/add";
-import Home from "../pages/landing/home";
+import Home from "../pages/my/home";
 import Profile from "../pages/my/profile/profile";
 import StatusBook from "../pages/my/book/status-book";
 import Register from "../pages/register/register";

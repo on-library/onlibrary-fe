@@ -1,3 +1,4 @@
+import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { Box, Heading, Text } from "@chakra-ui/layout";
 import { useQuery } from "react-query";
 import LayoutMy from "../../../components/layouts/my/layout-my";
@@ -17,6 +18,13 @@ const Rent = () => {
 
       {profileQuery.isLoading ? (
         "Loading..."
+      ) : profileQuery.data?.user.rents.length <= 0 ? (
+        <Box>
+          <Alert status="warning">
+            <AlertIcon />
+            Belum ada buku yang dipinjam
+          </Alert>
+        </Box>
       ) : (
         <Box mt={8}>
           <RentTableMy profileQuery={profileQuery} />

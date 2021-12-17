@@ -42,9 +42,13 @@ export const extendConfirmRent = async ({ rent_id }) => {
   return response.data;
 };
 
-export const extendDeclineRent = async ({ rent_id }) => {
+export const extendDeclineRent = async ({
+  rent_id,
+  alasan_penolakan_perpanjangan,
+}) => {
   const response = await fetchApi.post(ENTRY_API + "/extend/decline", {
     rent_id,
+    alasan_penolakan_perpanjangan,
   });
   return response.data;
 };

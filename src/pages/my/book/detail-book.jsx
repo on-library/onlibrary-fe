@@ -20,16 +20,26 @@ import { getDetailBook } from "../../../modules/book/api";
 import { addRent } from "../../../modules/rent/api";
 import RentSuccessModal from "../../../components/pages/my/book/detailed-book/rent-success-modal";
 import { useState } from "react";
+import { StarIcon } from "@chakra-ui/icons";
+import ReviewModal from "../../../components/pages/my/book/detailed-book/review-modal";
+import BookEmptyModal from "../../../components/pages/my/book/detailed-book/book-empty-modal";
+import { getReviewsByBook } from "../../../modules/reviews/api";
 
 const DetailBook = () => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState();
+  const [isOpenReview, setIsOpenReview] = useState();
+  const [isOpenEmpty, setIsOpenEmpty] = useState();
   const [dataBuku, setDataBuku] = useState();
   const idBook = pathname.split("/")[3];
 
   const queryBook = useQuery(["book", idBook], () => getDetailBook(idBook), {
     enabled: !!idBook,
   });
+
+  const queryReview = useQuery(["review", idBook], () =>
+    getReviewsByBook({ book_id: idBook })
+  );
 
   const mutation = useMutation(() => addRent({ book_id: idBook }), {
     onSuccess: (data) => {
@@ -39,6 +49,10 @@ const DetailBook = () => {
   });
 
   const onSubmit = () => {
+    if (queryBook.data.data.stok <= 0) {
+      setIsOpenEmpty(true);
+      return;
+    }
     mutation.mutate();
   };
 
@@ -49,21 +63,38 @@ const DetailBook = () => {
         onClose={() => setIsOpen(false)}
         dataModal={dataBuku}
       />
+      <ReviewModal
+        isOpen={isOpenReview}
+        onClose={() => setIsOpenReview(false)}
+        queryReview={queryReview}
+      />
+      <BookEmptyModal
+        isOpen={isOpenEmpty}
+        onClose={() => setIsOpenEmpty(false)}
+      />
       {queryBook.isLoading ? (
         "loading..."
       ) : (
         <SimpleGrid columns={[12]} gap={12}>
-          <GridItem colSpan={[12, 12, 12, 10]}>
+          <GridItem colSpan={[12, 12, 12, 9]}>
             <MainDetailBook queryBook={queryBook} />
           </GridItem>
-          <GridItem colSpan={[12, 12, 12, 2]} height={{ lg: "168px" }}>
+          <GridItem colSpan={[12, 12, 12, 3]} height={{ lg: "168px" }}>
             <Box
               width="full"
               display="flex"
               justifyContent="end"
               alignItems="end"
               h="full"
+              experimental_spaceX={4}
             >
+              <Button
+                colorScheme="gray"
+                width={{ base: "100%", lg: "200px" }}
+                onClick={() => setIsOpenReview(true)}
+              >
+                Beri ulasan
+              </Button>
               <Button
                 colorScheme="purple"
                 width={{ base: "100%", lg: "200px" }}
@@ -87,9 +118,11 @@ const DetailBook = () => {
               Ulasan Buku
             </Text>
             <Box display="flex" flexDir="column" experimental_spaceY={6} mt={2}>
-              {queryBook.data?.data.reviews.map((item) => (
-                <ItemReviewBook data={item} />
-              ))}
+              {queryReview.data?.data?.length > 0
+                ? queryReview.data?.data.map((item) => (
+                    <ItemReviewBook data={item} />
+                  ))
+                : ""}
             </Box>
           </GridItem>
         </SimpleGrid>

@@ -16,11 +16,14 @@ import {
 import { getStatusRent } from "../../../../utils/get-status-rent";
 import { Table } from "../../../ui";
 import InfoExtendModal from "./info-extend-modal";
+import ReasonRejectionModal from "./reason-rejection-modal";
 
 const RentTable = ({ listRentQuery }) => {
   useEffect(() => {}, [listRentQuery]);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenReason, setIsOpenReason] = useState(false);
+
   const [dataModal, setDataModal] = useState();
 
   const mutationConfirm = useMutation(
@@ -69,13 +72,25 @@ const RentTable = ({ listRentQuery }) => {
   );
 
   const mutationExtendDecline = useMutation(
-    (data) => extendDeclineRent({ rent_id: data.rent_id }),
+    (data) =>
+      extendDeclineRent({
+        rent_id: data.rent_id,
+        alasan_penolakan_perpanjangan: data.alasan_penolakan_perpanjangan,
+      }),
     {
       onSuccess: () => {
         listRentQuery.refetch();
+        setIsOpenReason(false);
       },
     }
   );
+
+  const onSubmitMutationExtendDecline = (data) => {
+    mutationExtendDecline.mutate({
+      rent_id: isOpenReason,
+      alasan_penolakan_perpanjangan: data.alasan_penolakan_perpanjangan,
+    });
+  };
 
   const columns = useMemo(
     () => [
@@ -206,9 +221,7 @@ const RentTable = ({ listRentQuery }) => {
                   </Button>
                   <Button
                     colorScheme="red"
-                    onClick={() =>
-                      mutationExtendDecline.mutate({ rent_id: data.pinjam_id })
-                    }
+                    onClick={() => setIsOpenReason(data.pinjam_id)}
                   >
                     Tolak
                   </Button>
@@ -224,17 +237,19 @@ const RentTable = ({ listRentQuery }) => {
     []
   );
 
-  const data = listRentQuery.data.data.filter(
+  const data = listRentQuery.data?.data?.filter(
     (item) => item.status_pinjam !== -3
   );
 
+  console.log(data);
+
   return (
     <>
-      {/* <BookEditModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        dataModal={dataModal}
-      /> */}
+      <ReasonRejectionModal
+        isOpen={isOpenReason}
+        onClose={() => setIsOpenReason(false)}
+        onSubmitMutationExtendDecline={onSubmitMutationExtendDecline}
+      />
       <InfoExtendModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

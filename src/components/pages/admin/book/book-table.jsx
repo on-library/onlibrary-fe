@@ -12,7 +12,9 @@ import {
   PopoverTrigger,
 } from "@chakra-ui/popover";
 import { useEffect, useMemo, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useMutation } from "react-query";
+import { BASE_URL } from "../../../../constants/endpoint";
 import { deleteBook } from "../../../../modules/book/api";
 import { Table } from "../../../ui";
 import BookEditModal from "./book-edit-modal";
@@ -24,6 +26,9 @@ const BookTable = ({ listBookQuery }) => {
   const mutationDelete = useMutation((data) => deleteBook(data), {
     onSuccess: () => {
       listBookQuery.refetch();
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message);
     },
   });
 
@@ -43,12 +48,14 @@ const BookTable = ({ listBookQuery }) => {
       },
       {
         Header: "Gambar Buku",
-        accessor: () => {
+        accessor: (data) => {
           return (
             <Image
               display="flex"
               mx="auto"
-              src="gibbresh.png"
+              width="200px"
+              height={"240px"}
+              src={`${BASE_URL + data.img_url}`}
               fallbackSrc="https://via.placeholder.com/150x200"
             />
           );
@@ -83,6 +90,7 @@ const BookTable = ({ listBookQuery }) => {
         accessor: (data, id) => {
           return (
             <Box display="flex" experimental_spaceX={4}>
+              <Toaster />
               <Button
                 colorScheme="green"
                 onClick={() => {

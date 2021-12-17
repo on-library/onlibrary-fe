@@ -48,3 +48,12 @@ export const verifyAuth = async ({ code, username }) => {
   });
   return response.data;
 };
+
+export const editProfile = async ({ name, email, address }) => {
+  const response = await fetchApi.post(ENTRY_API + "/edit", {
+    name,
+    email,
+    address,
+  });
+  return response.data;
+};

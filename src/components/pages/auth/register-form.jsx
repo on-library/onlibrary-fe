@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { Flex, Heading, Input, Button, Stack, Box } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  Input,
+  Button,
+  Stack,
+  Box,
+  Text,
+} from "@chakra-ui/react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { useMutation } from "react-query";
@@ -66,8 +74,7 @@ const RegisterForm = () => {
                 <Input
                   placeholder="Nama"
                   {...register("name", {
-                    required: true,
-                    minLength: 6,
+                    required: "Wajib diisi",
                   })}
                   isInvalid={!!errors.name}
                 />
@@ -82,6 +89,9 @@ const RegisterForm = () => {
                   })}
                   isInvalid={!!errors.email}
                 />
+                <Text textColor="red.500" mt={1} fontSize="sm">
+                  {!!errors.email ? errors.email : ""}
+                </Text>
                 <FormLabel mt={2}>NIM</FormLabel>
                 <Input
                   type="number"
@@ -93,6 +103,9 @@ const RegisterForm = () => {
                   })}
                   isInvalid={!!errors.nim}
                 />
+                <Text textColor="red.500" mt={1} fontSize="sm">
+                  {/* {errors.nim && errors.nim == "minLength" ? "15 karakter" : ""} */}
+                </Text>
                 <FormLabel mt={2}>Tanggal Lahir</FormLabel>
                 <Input
                   type="date"
@@ -122,17 +135,27 @@ const RegisterForm = () => {
                   })}
                   isInvalid={!!errors.username}
                 />
+                <Text textColor="red.500" mt={1} fontSize="sm">
+                  {errors.username && errors.username.type == "minLength"
+                    ? "Minimal 6 karakter"
+                    : ""}
+                </Text>
                 <FormLabel mt={2}>Password</FormLabel>
                 <Input
                   type="password"
                   placeholder="Password (alphanumeric)"
                   {...register("password", {
                     required: true,
-                    minLength: 6,
+                    minLength: 6 | "minimal",
                     pattern: /^[a-z0-9]+$/i,
                   })}
                   isInvalid={!!errors.password}
                 />
+                <Text textColor="red.500" mt={1} fontSize="sm">
+                  {errors.password && errors.password.type == "minLength"
+                    ? "Minimal 6 karakter"
+                    : ""}
+                </Text>
               </FormControl>
               <Stack direction="row">
                 <Button
