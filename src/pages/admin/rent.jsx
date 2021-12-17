@@ -42,6 +42,8 @@ const Rent = () => {
         {/* ) : ( */}
         {listRentQuery.isLoading ? (
           ""
+        ) : listRentQuery.data?.data == null ? (
+          <Box></Box>
         ) : (
           <RentTable listRentQuery={listRentQuery} />
         )}

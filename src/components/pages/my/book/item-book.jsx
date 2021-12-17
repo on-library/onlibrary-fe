@@ -35,14 +35,13 @@ const ItemBook = ({ data }) => {
           <Text>{result} ...</Text>
         </Box>{" "}
       </Box>
-      <Box display="flex" experimental_spaceX={4}>
+      <Box display="flex" justifyContent="end">
         <Button
           colorScheme="purple"
           onClick={() => navigate(`/my/book/${data.id}`)}
         >
           Lihat Buku
         </Button>
-        <BsFillBookmarkFill size="2.2em" />
       </Box>
     </Box>
   );

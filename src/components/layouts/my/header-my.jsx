@@ -1,12 +1,15 @@
 import { Button } from "@chakra-ui/button";
 import { Flex, Box, Divider, Stack, Text } from "@chakra-ui/layout";
 import { Spacer } from "@chakra-ui/react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router";
 import { getProfile } from "../../../modules/auth/api";
+import LogoutModal from "./logout-modal";
 
 const HeaderMy = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState();
 
   const profileQuery = useQuery(
     ["profile", localStorage.getItem("token")],
@@ -14,9 +17,10 @@ const HeaderMy = () => {
   );
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("guard_role");
-    navigate("/auth/login");
+    setIsOpen(true);
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("guard_role");
+    // navigate("/auth/login");
   };
 
   return (
@@ -28,6 +32,7 @@ const HeaderMy = () => {
         mx="auto"
         alignItems="center"
       >
+        <LogoutModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
         {/* <Text>{profileQuery.data?.user?.username}</Text> */}
         <Box>
           <Text
@@ -63,6 +68,7 @@ const HeaderMy = () => {
               borderRadius={4}
               colorScheme="blue"
               width="full"
+              px={8}
               onClick={() => navigate("/my/profile")}
             >
               Sunting Profil

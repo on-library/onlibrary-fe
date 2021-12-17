@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import genreOptions from "../../../../data/genre-options";
 import { addBook } from "../../../../modules/book/api";
 import { getCategories } from "../../../../modules/category/api";
+import { blobToBase64 } from "../../../../utils/blob-to-base-64";
 import sendDateFormat from "../../../../utils/send-date-format";
 import Select from "../../../ui/select";
 
@@ -16,12 +17,16 @@ const BookAddForm = ({ bookAddForm }) => {
   const categoryList = useQuery(["categories"], () => getCategories());
 
   const mutation = useMutation(
-    (data) =>
-      addBook({
+    async (data) => {
+      let baseImageRaw = await blobToBase64(data.upload_image[0]);
+      let baseImage = baseImageRaw.split(",")[1];
+      return addBook({
         ...data,
         stok: +data.stok,
         tahun_terbit: sendDateFormat(data.tahun_terbit),
-      }),
+        image_base: baseImage,
+      });
+    },
     {
       onSuccess: () => {
         navigate("/admin/book");
@@ -30,8 +35,8 @@ const BookAddForm = ({ bookAddForm }) => {
   );
 
   const onSubmit = (data) => {
-    console.log(data);
-    // mutation.mutate(data);
+    // console.log(data);
+    mutation.mutate(data);
   };
 
   if (categoryList.isLoading) {
@@ -190,7 +195,16 @@ const BookAddForm = ({ bookAddForm }) => {
           <GridItem colSpan={2}>
             <Box>
               <Text fontWeight="semibold">Upload gambar</Text>
-              <Input type="file" py="auto" borderWidth="0px" mt="2" />
+              <Input
+                {...bookAddForm.register("upload_image", {
+                  required: "* required",
+                })}
+                type="file"
+                accept="image/png"
+                py="auto"
+                borderWidth="0px"
+                mt="2"
+              />
             </Box>
           </GridItem>
 

@@ -50,6 +50,8 @@ const Book = () => {
       <Box mt={4}>
         {listBookQuery.isLoading ? (
           ""
+        ) : listBookQuery.data?.data == null ? (
+          <Box></Box>
         ) : (
           <BookTable listBookQuery={listBookQuery} />
         )}

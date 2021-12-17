@@ -21,3 +21,16 @@ export const deleteBook = async (data) => {
   const response = await fetchApi.delete(ENTRY_API + `/${data.book_id}`);
   return response.data;
 };
+
+export const findBook = async ({ book_title }) => {
+  const response = await fetchApi.post(ENTRY_API + "/find", { book_title });
+  return response.data;
+};
+
+export const editBook = async ({ book_id, deskripsi_buku }) => {
+  const response = await fetchApi.put(ENTRY_API + "/edit", {
+    book_id,
+    deskripsi_buku,
+  });
+  return response.data;
+};
